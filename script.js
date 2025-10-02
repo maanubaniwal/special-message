@@ -79,7 +79,6 @@ if (isIndexPage) {
                 scoreEl.textContent = `Score: ${score}`;
                 
                 if (score >= goal) {
-                    // When goal is reached, show the modal instead of changing page
                     showModal();
                 }
             }
@@ -91,23 +90,20 @@ if (isIndexPage) {
         canvas.height = window.innerHeight;
     });
 
-    // --- NEW MODAL CODE (index.html) ---
     function showModal() {
-        // Fetch the content from letter.html
         fetch('letter.html')
             .then(response => response.text())
             .then(html => {
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(html, 'text/html');
-                const letterContent = doc.querySelector('.message-box.letter').innerHTML;
+                const letterBox = doc.querySelector('.message-box.letter');
                 
-                // Create modal elements
                 const modalOverlay = document.createElement('div');
                 modalOverlay.className = 'modal-overlay';
                 
                 const modalContent = document.createElement('div');
                 modalContent.className = 'modal-content';
-                modalContent.innerHTML = letterContent;
+                modalContent.innerHTML = letterBox.innerHTML;
                 
                 const closeModalBtn = document.createElement('button');
                 closeModalBtn.id = 'close-modal-btn';
@@ -117,20 +113,20 @@ if (isIndexPage) {
                 modalOverlay.appendChild(modalContent);
                 document.body.appendChild(modalOverlay);
                 
-                // Show the modal
                 modalOverlay.style.display = 'flex';
                 
-                // Add event listeners for the new content inside the modal
                 setupModalEventListeners();
 
-                // Close modal button
                 closeModalBtn.addEventListener('click', () => {
+                    const song = document.getElementById('our-song');
+                    if (song) {
+                        song.pause();
+                    }
                     modalOverlay.remove();
                 });
             });
     }
 
-    // Function to handle events inside the loaded modal
     function setupModalEventListeners() {
         const playBtn = document.getElementById('play-music-btn');
         const song = document.getElementById('our-song');
@@ -151,17 +147,19 @@ if (isIndexPage) {
     animate();
 
 } else if (isLetterPage) {
-    // --- CODE FOR THE MUSIC BUTTON (letter.html) ---
+    // --- CODE FOR THE MUSIC BUTTON if letter.html is opened directly ---
     const playBtn = document.getElementById('play-music-btn');
     const song = document.getElementById('our-song');
 
-    playBtn.addEventListener('click', () => {
-        if (song.paused) {
-            song.play();
-            playBtn.textContent = '⏸️ Pause Song';
-        } else {
-            song.pause();
-            playBtn.textContent = '▶️ Play Our Song';
-        }
-    });
+    if(playBtn && song) {
+        playBtn.addEventListener('click', () => {
+            if (song.paused) {
+                song.play();
+                playBtn.textContent = '⏸️ Pause Song';
+            } else {
+                song.pause();
+                playBtn.textContent = '▶️ Play Our Song';
+            }
+        });
+    }
 }
