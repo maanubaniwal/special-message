@@ -134,7 +134,7 @@ if (isIndexPage) {
             playBtn.addEventListener('click', () => {
                 // If the song hasn't been created yet, create it
                 if (!song) {
-                    song = new Audio('Lover.mp3');
+                    song = new Audio('breathless.mp3');
                     song.loop = true;
                 }
                 
@@ -153,3 +153,4 @@ if (isIndexPage) {
     animate();
 
 }
+
