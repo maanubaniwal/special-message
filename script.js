@@ -136,6 +136,7 @@ if (isIndexPage) {
                 if (!song) {
                     song = new Audio('breathless.mp3');
                     song.loop = true;
+                    song.currentTime = 1:05;
                 }
                 
                 // Play or pause the song
@@ -153,4 +154,5 @@ if (isIndexPage) {
     animate();
 
 }
+
 
