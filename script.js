@@ -165,8 +165,3 @@ if (isIndexPage) {
         }
     });
 }
-    canvas.height = window.innerHeight;
-});
-
-
-animate();
