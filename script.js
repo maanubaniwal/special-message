@@ -1,6 +1,9 @@
 // Check which page we're on
 const isIndexPage = document.getElementById('hearts-canvas') !== null;
-const isLetterPage = document.getElementById('our-song') !== null;
+const isLetterPage = document.getElementById('our-song-container') !== null; // Note: this ID is no longer used, but logic is kept for structure
+
+// Global variable to hold the audio object
+let song = null;
 
 if (isIndexPage) {
     // --- CODE FOR THE HEARTS GAME (index.html) ---
@@ -62,10 +65,8 @@ if (isIndexPage) {
         requestAnimationFrame(animate);
     }
 
-    // Generate hearts periodically
     setInterval(createHeart, 300);
 
-    // Game Logic: Catching hearts
     canvas.addEventListener('click', (event) => {
         const rect = canvas.getBoundingClientRect();
         const x = event.clientX - rect.left;
@@ -77,7 +78,6 @@ if (isIndexPage) {
                 hearts.splice(index, 1);
                 score++;
                 scoreEl.textContent = `Score: ${score}`;
-                
                 if (score >= goal) {
                     showModal();
                 }
@@ -118,9 +118,9 @@ if (isIndexPage) {
                 setupModalEventListeners();
 
                 closeModalBtn.addEventListener('click', () => {
-                    const song = document.getElementById('our-song');
                     if (song) {
                         song.pause();
+                        song = null; // Clean up the song object
                     }
                     modalOverlay.remove();
                 });
@@ -129,10 +129,16 @@ if (isIndexPage) {
 
     function setupModalEventListeners() {
         const playBtn = document.getElementById('play-music-btn');
-        const song = document.getElementById('our-song');
 
-        if(playBtn && song) {
+        if (playBtn) {
             playBtn.addEventListener('click', () => {
+                // If the song hasn't been created yet, create it
+                if (!song) {
+                    song = new Audio('Lover.mp3');
+                    song.loop = true;
+                }
+                
+                // Play or pause the song
                 if (song.paused) {
                     song.play();
                     playBtn.textContent = '⏸️ Pause Song';
@@ -146,20 +152,4 @@ if (isIndexPage) {
     
     animate();
 
-} else if (isLetterPage) {
-    // --- CODE FOR THE MUSIC BUTTON if letter.html is opened directly ---
-    const playBtn = document.getElementById('play-music-btn');
-    const song = document.getElementById('our-song');
-
-    if(playBtn && song) {
-        playBtn.addEventListener('click', () => {
-            if (song.paused) {
-                song.play();
-                playBtn.textContent = '⏸️ Pause Song';
-            } else {
-                song.pause();
-                playBtn.textContent = '▶️ Play Our Song';
-            }
-        });
-    }
 }
