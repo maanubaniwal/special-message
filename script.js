@@ -133,7 +133,7 @@ if (isIndexPage) {
         if (playBtn) {
             playBtn.addEventListener('click', () => {
                 if (!song) {
-                    song = new Audio('breathless.mp3'); // Make sure your song name is correct here
+                   song = new Audio('breathless.mp3');// Make sure your song name is correct here
                     song.loop = true;
                 }
                 
@@ -150,4 +150,5 @@ if (isIndexPage) {
     
     animate();
 }
+
 
