@@ -1,6 +1,6 @@
 // Check which page we're on
 const isIndexPage = document.getElementById('hearts-canvas') !== null;
-const isLetterPage = document.getElementById('our-song-container') !== null; // Note: this ID is no longer used, but logic is kept for structure
+const isLetterPage = document.getElementById('our-song-container') !== null;
 
 // Global variable to hold the audio object
 let song = null;
@@ -120,7 +120,7 @@ if (isIndexPage) {
                 closeModalBtn.addEventListener('click', () => {
                     if (song) {
                         song.pause();
-                        song = null; // Clean up the song object
+                        song = null;
                     }
                     modalOverlay.remove();
                 });
@@ -132,14 +132,11 @@ if (isIndexPage) {
 
         if (playBtn) {
             playBtn.addEventListener('click', () => {
-                // If the song hasn't been created yet, create it
                 if (!song) {
-                    song = new Audio('breathless.mp3');
+                    song = new Audio('Lover.mp3'); // Make sure your song name is correct here
                     song.loop = true;
-                    song.currentTime = 1:05;
                 }
                 
-                // Play or pause the song
                 if (song.paused) {
                     song.play();
                     playBtn.textContent = '⏸️ Pause Song';
@@ -152,7 +149,4 @@ if (isIndexPage) {
     }
     
     animate();
-
 }
-
-
